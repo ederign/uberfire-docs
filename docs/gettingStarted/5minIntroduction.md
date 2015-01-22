@@ -9,14 +9,11 @@ This guide assumes you have the following software set up and working on your co
 
 ## Creating your first App
 
- In a command line, run the archetype to create your first app. (TODO Change archetype version after release)
+ In a command line, run the archetype to create your first app. [TODO Change archetype version after release]
 
 
 ```
-$ mvn archetype:generate
-    -DarchetypeGroupId=org.uberfire
-    -DarchetypeArtifactId=uberfire-project-archetype
-    -DarchetypeVersion=0.5.0-SNAPSHOT
+$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.5.0-SNAPSHOT
 ```
  Maven will ask for your groupId, let's use:
 ```
@@ -26,11 +23,18 @@ For the artifactId value:
 ```
 demo
 ```
+For version
+```
+1.0-SNAPSHOT
+```
+For package
+```
+org.uberfire
+```
 Use default value for package, for capitalizedRootArtifactId use:
 ```
 Demo
 ```
-
 Confirm your changes and then you should see the message:
 ```
 [INFO] ---------------------------------------------------------
@@ -55,15 +59,24 @@ You should see the maven build success message again.
 
 ## See it work!
 
-How about run our first project?
+How about running our first project?
 ```
 cd demo-showcase/demo-webapp
 mvn gwt:run
 ```
 Wait for GWT console build your app:
 
-(TODO)
-![gwt build](images/gwt_build.tiff)
+![gwt build](gwt-console.png)
+
+Open your Uberfire App in Firefox (in favor of fast compiling, we are only compiling to Firefox in this demo):
+```
+ http://127.0.0.1:8888/index.jsp?gwt.codesvr=127.0.0.1:9997
+```
+You should see our Hello World.
+
+![hello world](helloWorld.png)
+
+When you see that Hello World, you are able to soon taste Uberfire power.
 
 
 

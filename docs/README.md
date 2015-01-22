@@ -1,4 +1,4 @@
 ![uberfire logo](cover.png)
 
 
-[TODO] Docs Guidelines
+[TODO] Create Doc Index
