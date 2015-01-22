@@ -1,0 +1,83 @@
+#Running Uberfire Showcase
+This guide will help you install an UberFire demo application on your own computer. This will help let you try out an UberFire application and see our show case demo.
+
+##Get an app server
+
+The pre-built UberFire Showcase Web App is available for JBoss AS 7.1.1, EAP 6.2, and Tomcat.
+
+If you don’t already have one of these app servers installed on your computer, don’t worry. In all cases, installing is as easy as downloading and unzipping.
+
+| JBoss AS 7.1.1, EAP 6.2 | [Download](http://jbossas.jboss.org/downloads)|
+| -- | -- |
+| **Tomcat 7** | **[Download](http://tomcat.apache.org/download-70.cgi)** |
+
+
+Once the file has finished downloading, unzip it wherever you like.
+##Start the app server
+Now start the app server using a command line terminal. Use the *cd* command to change the working directory of your terminal to the place where you unzipped the application server, then execute one of the following commands, based on your operating system and choice of app server:
+
+|Server|	*nix, Mac OS X|	Windows|
+| -- | -- | -- |
+| AS 7, EAP 6 |bin/standalone.sh| bin\standalone.bat|
+| Tomcat | bin/startup.sh | bin\startup.bat|
+
+Then visit the URL http://localhost:8080/ and you should see a webpage confirming that the app server is running.
+
+##Get the pre-built WAR file
+Now download the pre-built WAR file for the server you’ve installed and started.
+
+
+| JBoss AS 7.1.1, EAP 6.2 | Download |
+| -- | -- |
+| **Tomcat 7** | **Download** |
+
+##Build from source
+
+You can build your archetype from the lastest source.
+```
+$ git clone git@github.com:uberfire/uberfire.git
+$ cd uberfire
+$ mvn clean install
+```
+The war's will be located at:
+```
+../uberfire/uberfire-showcase/showcase-distribution-wars/target
+```
+
+##Deploy the WAR
+Rename the downloaded WAR file to **uberfire-showcase.war** and copy it into the auto-deployment directory for your app server:
+
+| JBoss AS 7.1.1, EAP 6.2 | standalone/deployments/|
+| -- | -- |
+| **Tomcat** |**webapps/** |
+
+Example: JBoss AS 7.1.1 on Unix/Linux/Mac:
+```
+$ mv ~/Downloads/showcase-distribution-wars-0.4.0-20131125.172155-223-jboss-as7.0.war standalone/deployments/uberfire-showcase.war
+```
+
+You should notice some disk activity, and if you’re using JBoss AS or EAP, you will see some logging on the console where you started the server. Tomcat logs only to files by default, so you won’t see logs in your Tomcat terminal at this stage.
+
+##See it work!
+Now visit [http://localhost:8080/uberfire-showcase/](http://localhost:8080/uberfire-showcase/) and sign in with username **admin**, password **admin**.
+
+Once you’re logged in, here are some things to try:
+
+* Try switching perspectives in the perspective menu.
+
+* Try dragging a view from one panel to another.
+
+* Try adding a new location for views by dragging a view near the edge of the screen.
+
+* Try exploring the filesystem in the file explorer.
+
+* Try selecting a file and using the editor.
+
+
+##What next?
+Now that you’ve created and deployed an UberFire app and had some hands-on time with it, why not create a more complex App? Our tutorial guide provides a detailed walkthrough to create a Github Clone using Uberfire.
+
+
+
+
+
