@@ -95,6 +95,52 @@ public class MoodScreen extends Composite {
 ```
 MoodScreen is very similar to HelloWorldScreen. The only structural differences are related to our choice to use an Errai UI Template. See more about Errai UI templates in [this guide](https://docs.jboss.org/author/display/ERRAI/Errai+UI).
 
+### Creating MoodListenerScreen
+Create a HTML file named MoodListenerScreen.html inside Java package org.uberfire.client.screens with this content:
+```
+<div>
+    <div style="border: 1px solid red; padding: 30px">
+        <input data-field=moodTextBox type=text placeholder="I understand that you are feeling...">
+    </div>
+</div>
+```
+And create MoodListenerScreen.java, inside org.uberfire.cliente.screens:
+```
+package org.uberfire.client.screens;
+
+import javax.enterprise.context.Dependent;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.TextBox;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.uberfire.client.annotations.WorkbenchPartTitle;
+import org.uberfire.client.annotations.WorkbenchScreen;
+import org.uberfire.shared.Mood;
+
+@Dependent
+@Templated
+@WorkbenchScreen(identifier="MoodListenerScreen")
+public class MoodListenerScreen extends Composite {
+
+    @Inject
+    @DataField
+    private TextBox moodTextBox;
+
+
+    @WorkbenchPartTitle
+    public String getScreenTitle() {
+        return "MoodListenerScreen";
+    }
+
+}
+```
+
 ### Giving MoodScreen, a perspective
 Let's create our first perspective, using Uberfire Templated Perspectives.
 
@@ -102,19 +148,21 @@ First, we need to create the perspective Errai UI template, named "HomePerspecti
 ```
 <div>
     <div id="home1">
-        <span><b>Hello World Screen from Archetype</b></span>
-
-        <div data-field="helloWorldScreen"></div>
-
-    </div>
-    <div id="home2">
-        <span><b> Our MoodScreen</b></span>
+        <span><b>Our MoodScreen</b></span>
 
         <div data-field="moodScreen"></div>
     </div>
+    <div id="home2">
+        <span><b>Mood Listener</b></span>
+
+        <div data-field="moodListener"></div>
+
+    </div>
 </div>
 ```
+
 Now, let's create the Perspective class on org.uberfire.client.perspectives package:
+
 ```
 package org.uberfire.client.perspectives;
 
@@ -138,8 +186,8 @@ public class MoodPerspective extends Composite {
     UFFlowPanel moodScreen = new UFFlowPanel(100);
 
     @DataField
-    @WorkbenchPanel(parts = "HelloWorldScreen")
-    UFFlowPanel helloWorldScreen = new UFFlowPanel(100);
+    @WorkbenchPanel(parts = "MoodListenerScreen")
+    UFFlowPanel moodListener = new UFFlowPanel(100);
 
 }
 ```
@@ -163,16 +211,15 @@ We need to update org.uberfire.client.ShowcaseEntryPoint and replace setupMenu m
                             }
                         } )
                         .endMenu().
-                        newTopLevelMenu( "MoodPerspective" )
+                        newTopLevelMenu( "Mood Perspective" )
                         .respondsWith( new Command() {
                             @Override
                             public void execute() {
-                                placeManager.goTo( new DefaultPlaceRequest( "MoodPerspective"
+                                placeManager.goTo( "MoodPerspective");
                             }
                         } )
                         .endMenu()
                         .build();
-
         menubar.addMenus( menus );
     }
  ```
@@ -192,10 +239,10 @@ Click on MoodPerspective menu:
 ### Let's make the screens communicate
 Did you notice the CDI event raised by MoodScreen? If no, take a look at onKeyDownMethod.
 
-Now let’s do something in HelloWorldScreen in response to the the event we fire in MoodScreen when the user presses Enter. To do this we’ll add a CDI observer method at HelloWorldScreen:
+Now let’s do something in  in response to the the event we fire in MoodListenerScreen when the user presses Enter. To do this we’ll add a CDI observer method at MoodListenerScreen:
 ```
 public void onMoodChange(@Observes Mood mood) {
-    label.setText("I understand you are feeling " + mood.getText());
+        moodTextBox.setText("You are feeling " + mood.getText());
 }
 ```
 Build and run your App again (mvn gwt:compile gwt:run), write a text on "How do  you fell" textbox and press enter to see screens communicating:

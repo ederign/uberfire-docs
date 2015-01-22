@@ -1,7 +1,7 @@
 # How it all fits together
 Build on the strengths of [GWT](http://www.gwtproject.org/) and [ERRAI](http://erraiframework.org/), Uberfire allow you to write and maintain your application code in the Java programming language with all of the Java tooling at your disposal, then deploy it to the browser as a native JavaScript + HTML application.
 
-![code flow shart](http://www.uberfireframework.org/images/shared-code-flowchart.png)
+![code flow shart](shared-code-flowchart.png)
 
 ## Killer Features
 
@@ -17,7 +17,7 @@ Each plugin is a maven module, so when building a distribution, you simple need 
 
 Drag-and-drop layouts give your users control over their work environment.
 
-![dnd](http://www.uberfireframework.org/screenshots/drag-views.gif)
+![dnd](drag-views.gif)
 
 ### Powerful VFS
 
@@ -48,7 +48,7 @@ Develop plugins in Java against our declarative, typesafe APIs, or choose your f
 
 Plugins can contribute new perspectives, views, editors, menu items, and more to an UberFire project.
 
-![gwt](http://www.uberfireframework.org/images/gwt-logo-100.png) ![jquery](http://www.uberfireframework.org/images/jquery-ui-logo-100.png)![angular](http://www.uberfireframework.org/images/angularjs-logo-100.png) ![ember](http://www.uberfireframework.org/images/emberjs-logo-100.png)
+![gwt](gwt-logo-100.png) ![jquery](jquery-ui-logo-100.png)![angular](angularjs-logo-100.png) ![ember](emberjs-logo-100.png)
 
 
 ###Modular Design

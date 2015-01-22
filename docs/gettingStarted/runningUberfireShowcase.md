@@ -61,6 +61,8 @@ You should notice some disk activity, and if you’re using JBoss AS or EAP, you
 ##See it work!
 Now visit [http://localhost:8080/uberfire-showcase/](http://localhost:8080/uberfire-showcase/) and sign in with username **admin**, password **admin**.
 
+![dnd](drag-views.gif)
+
 Once you’re logged in, here are some things to try:
 
 * Try switching perspectives in the perspective menu.
