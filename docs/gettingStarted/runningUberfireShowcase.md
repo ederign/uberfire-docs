@@ -27,9 +27,9 @@ Then visit the URL http://localhost:8080/ and you should see a webpage confirmin
 Now download the pre-built WAR file for the server you’ve installed and started.
 
 
-| JBoss AS 7.1.1, EAP 6.2 | Download |
+| JBoss AS 7.1.1, EAP 6.2 | [Download](http://search.maven.org/remotecontent?filepath=org/uberfire/showcase-distribution-wars/0.5.0.CR10/showcase-distribution-wars-0.5.0.CR10-jboss-as7.0.war) |
 | -- | -- |
-| **Tomcat 7** | **Download** |
+| **Tomcat 7** | **[Download](http://search.maven.org/remotecontent?filepath=org/uberfire/showcase-distribution-wars/0.5.0.CR10/showcase-distribution-wars-0.5.0.CR10-tomcat7.0.war)** |
 
 ##Build from source
 
