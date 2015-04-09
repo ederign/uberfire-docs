@@ -45,7 +45,7 @@ Create a HTML file named MoodScreen.html inside Java package org.uberfire.client
     </div>
 </div>
 ```
-This file will be used as a client-side template for the new MoodScreen widget. Here’s what that looks like:
+Create a Java class "MoodScreen.java" in the package org.uberfire.client.screens. This file will be used as a client-side template for the new MoodScreen widget. Here’s what that looks like:
 ```
 package org.uberfire.client.screens;
 
@@ -144,7 +144,7 @@ public class MoodListenerScreen extends Composite {
 ### Giving MoodScreen, a perspective
 Let's create our first perspective, using Uberfire Templated Perspectives.
 
-First, we need to create the perspective Errai UI template, named "HomePerspective.html" on org.uberfire.client.perspectives package:
+First, we need to create the perspective Errai UI template, named "MoodPerspective.html" on org.uberfire.client.perspectives package:
 ```
 <div>
     <div id="home1">

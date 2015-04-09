@@ -31,6 +31,8 @@ Now download the pre-built WAR file for the server you’ve installed and starte
 | -- | -- |
 | **Tomcat 7** | **[Download](http://search.maven.org/remotecontent?filepath=org/uberfire/showcase-distribution-wars/0.5.0.CR10/showcase-distribution-wars-0.5.0.CR10-tomcat7.0.war)** |
 
+**Note**: If you find that the war file has limited functionality, e.g. some perspectives do not work correctly, please download an alternative version of the war file from http://www.uberfireframework.org/quick-start.html
+
 ##Build from source
 
 You can build your archetype from the lastest source.
