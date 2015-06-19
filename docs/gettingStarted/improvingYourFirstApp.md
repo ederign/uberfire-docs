@@ -1,6 +1,6 @@
 #Improving your first App
 In this session, we will create some basic Uberfire components aiming to give you an idea of how Uberfire works. For now, doesn’t pay to much attention to new terms and concepts that we will present, it’s time to only have fun.
-The Uberfire Architeture and details of how everything glues together will be presented in the [Tutorial](../tutorial/tutorial.md).
+The Uberfire Architeture and details of how everything glues together will be presented in the [Tutorial](../tutorial/tutorial.md) section.
 
 ## Felling Uberfire
 Let’s change our App so we can get a better feel for how Uberfire workbench perspectives and panels fit together.
@@ -13,6 +13,8 @@ The data model in an UberFire app is typically represented by Plain Old Java Obj
 
 The model class will be called Mood, and it will represent how the current user is feeling at the moment. Place it on org.uberfire.shared package of your web app.
 ```
+package org.uberfire.shared;
+
 public class Mood {
 
     private final String text;
@@ -161,7 +163,7 @@ First, we need to create the perspective Errai UI template, named "MoodPerspecti
 </div>
 ```
 
-Now, let's create the Perspective class on org.uberfire.client.perspectives package:
+Now, let's create the Perspective class MoodPerspective on org.uberfire.client.perspectives package:
 
 ```
 package org.uberfire.client.perspectives;
@@ -172,9 +174,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
-import org.uberfire.client.UFFlowPanel;
 import org.uberfire.client.annotations.WorkbenchPanel;
 import org.uberfire.client.annotations.WorkbenchPerspective;
+import org.uberfire.client.workbench.panels.UFFlowPanel;
 
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "MoodPerspective")
@@ -196,30 +198,25 @@ Moving on, let’s add MoodPerspective to the menu bar of our app.
 We need to update org.uberfire.client.ShowcaseEntryPoint and replace setupMenu method to that:
 ```
  private void setupMenu( @Observes final ApplicationReadyEvent event ) {
-        final PerspectiveActivity defaultPerspective = getDefaultPerspectiveActivity();
-
         final Menus menus =
                 newTopLevelMenu( "Home" )
                         .respondsWith( new Command() {
                             @Override
                             public void execute() {
-                                if ( defaultPerspective != null ) {
-                                    placeManager.goTo( new DefaultPlaceRequest( defaultPerspective.getIdentifier() ) );
-                                } else {
-                                    Window.alert( "Default perspective not found." );
-                                }
+                                placeManager.goTo( new DefaultPlaceRequest( "MainPerspective" ) );
                             }
                         } )
-                        .endMenu().
-                        newTopLevelMenu( "Mood Perspective" )
+                        .endMenu()
+                        .newTopLevelMenu( "Mood Perspective" )
                         .respondsWith( new Command() {
                             @Override
                             public void execute() {
-                                placeManager.goTo( "MoodPerspective");
+                                placeManager.goTo( "MoodPerspective" );
                             }
                         } )
                         .endMenu()
                         .build();
+
         menubar.addMenus( menus );
     }
  ```
@@ -245,9 +242,9 @@ public void onMoodChange(@Observes Mood mood) {
         moodTextBox.setText("You are feeling " + mood.getText());
 }
 ```
-Build and run your App again (mvn gwt:compile gwt:run), write a text on "How do  you fell" textbox and press enter to see screens communicating:
+Build and run your App again (mvn gwt: clean gwt:compile gwt:run), write a text on "How do  you fell" textbox and press enter to see screens communicating:
 
-![hello world](moodObserver.png)
+![hello world](moodPerspective.png)
 
 
 ### A taste on Uberfire lifecycle events
@@ -266,4 +263,4 @@ Edit MoodPerspective.java and add this two methods, run the app again and change
         Window.alert( "On Close" );
     }
 ```
-Build and run your App again (mvn gwt:compile gwt:run) and change perspectives to see the events raising.
+Build (mvn clean install) and run your App again (mvn clean gwt:run) and change perspectives to see the events raising.

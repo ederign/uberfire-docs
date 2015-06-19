@@ -64,17 +64,13 @@ You should see the maven build success message again.
 How about running our first project?
 ```
 cd demo-showcase/demo-webapp
-mvn gwt:run
+mvn clean gwt:run
 ```
 Wait for GWT console build your app:
 
 ![gwt build](gwt-console.png)
 
-Open your Uberfire App in Firefox (in favor of fast compiling, we are only compiling to Firefox in this demo):
-```
- http://127.0.0.1:8888/index.jsp?gwt.codesvr=127.0.0.1:9997
-```
-You should see our Hello World.
+Click on "Launch Default Browser" to open your Uberfire App. Log in as admin (Username) with admin ( as Password). You should see our Hello World.
 
 ![hello world](helloWorld.png)
 

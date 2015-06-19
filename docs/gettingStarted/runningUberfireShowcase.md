@@ -7,7 +7,7 @@ The pre-built UberFire Showcase Web App is available for JBoss AS 7.1.1, EAP 6.2
 
 If you don’t already have one of these app servers installed on your computer, don’t worry. In all cases, installing is as easy as downloading and unzipping.
 
-| JBoss AS 7.1.1, EAP 6.2 | [Download](http://jbossas.jboss.org/downloads)|
+| Wildfly 8.1 | [Download](http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.zip) |
 | -- | -- |
 | **Tomcat 7** | **[Download](http://tomcat.apache.org/download-70.cgi)** |
 
@@ -18,7 +18,7 @@ Now start the app server using a command line terminal. Use the *cd* command to 
 
 |Server|	*nix, Mac OS X|	Windows|
 | -- | -- | -- |
-| AS 7, EAP 6 |bin/standalone.sh| bin\standalone.bat|
+| WildFly|bin/standalone.sh| bin\standalone.bat|
 | Tomcat | bin/startup.sh | bin\startup.bat|
 
 Then visit the URL http://localhost:8080/ and you should see a webpage confirming that the app server is running.
@@ -27,11 +27,11 @@ Then visit the URL http://localhost:8080/ and you should see a webpage confirmin
 Now download the pre-built WAR file for the server you’ve installed and started.
 
 
-| JBoss AS 7.1.1, EAP 6.2 | [Download](http://search.maven.org/remotecontent?filepath=org/uberfire/showcase-distribution-wars/0.5.0.CR10/showcase-distribution-wars-0.5.0.CR10-jboss-as7.0.war) |
+| Wildfly | [Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta1/showcase-distribution-wars-0.7.0.Beta1-wildfly8.1.war) |
 | -- | -- |
-| **Tomcat 7** | **[Download](http://search.maven.org/remotecontent?filepath=org/uberfire/showcase-distribution-wars/0.5.0.CR10/showcase-distribution-wars-0.5.0.CR10-tomcat7.0.war)** |
+| **Tomcat 7** | **[Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta1/showcase-distribution-wars-0.7.0.Beta1-tomcat7.0.war)** |
 
-**Note**: If you find that the war file has limited functionality, e.g. some perspectives do not work correctly, please download an alternative version of the war file from http://www.uberfireframework.org/quick-start.html
+**Note**: If you find that the war file has limited functionality, e.g. some perspectives do not work correctly, please build it from source.
 
 ##Build from source
 
@@ -49,16 +49,16 @@ The war's will be located at:
 ##Deploy the WAR
 Rename the downloaded WAR file to **uberfire-showcase.war** and copy it into the auto-deployment directory for your app server:
 
-| JBoss AS 7.1.1, EAP 6.2 | standalone/deployments/|
+| Wildfly 8.1| standalone/deployments/|
 | -- | -- |
-| **Tomcat** |**webapps/** |
+| **Tomcat 7** |**webapps/** |
 
-Example: JBoss AS 7.1.1 on Unix/Linux/Mac:
+Example: Wildfly 8.1 on Unix/Linux/Mac:
 ```
 $ mv ~/Downloads/showcase-distribution-wars-0.4.0-20131125.172155-223-jboss-as7.0.war standalone/deployments/uberfire-showcase.war
 ```
 
-You should notice some disk activity, and if you’re using JBoss AS or EAP, you will see some logging on the console where you started the server. Tomcat logs only to files by default, so you won’t see logs in your Tomcat terminal at this stage.
+You should notice some disk activity, and if you’re using Wildfly, you will see some logging on the console where you started the server. Tomcat logs only to files by default, so you won’t see logs in your Tomcat terminal at this stage.
 
 ##See it work!
 Now visit [http://localhost:8080/uberfire-showcase/](http://localhost:8080/uberfire-showcase/) and sign in with username **admin**, password **admin**.
@@ -79,7 +79,7 @@ Once you’re logged in, here are some things to try:
 
 
 ##What next?
-Now that you’ve created and deployed an UberFire app and had some hands-on time with it, why not create a more complex App? Our tutorial guide provides a detailed walkthrough to create a Github Clone using Uberfire.
+Now that you’ve created and deployed an UberFire app and had some hands-on time with it, why not create a more complex App? Our tutorial guide provides a detailed walkthrough to create a Task Manager using Uberfire.
 
 
 

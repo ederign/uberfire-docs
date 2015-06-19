@@ -1,8 +1,6 @@
 ![uberfire logo](cover.png)
 
 # Summary
-
-* [Introduction](README.md)
 * [Overview](overview/overview.md)
    * [What is Uberfire](overview/whatIsUberfire.md)
    * [How it all fits together](overview/howitallfitstogether.md)
@@ -11,10 +9,13 @@
    * [Improving your first App](gettingStarted/improvingYourFirstApp.md)
    * [Running Uberfire Showcase](gettingStarted/runningUberfireShowcase.md)
 * [Tutorial](tutorial/tutorial.md)
+   * [Creating UF Tasks project](tutorial/createUfTasks.md)
+   * [Layout of Uberfire Archetype](tutorial/layoutArchetype.md)
    * [Setup Dev Enviroment](tutorial/setupDevEnv.md)
-   * [Building your own Github Clone](tutorial/buildingGitHubClone.md)
-       * [Errai UI/Template](tutorial/erraiUI.md)
+       * [Intellij IDEA](tutorial/intellij_idea.md)
+       * [Eclipse](tutorial/eclipse.md)
    * [Deploy Tomcat](tutorial/deployTomcat.md)
+   * [Deploy Wildfly](tutorial/deployWildfly.md)
 * [Uberfire Model](overview/uberfireModel.md)
    * [Perspective](overview/perspective.md)
    * [Panel](overview/panel.md)

@@ -36,10 +36,7 @@ public void onSaveButtonClicked() {
 }```
 
 ###Fine-Grained Security
-```
-code {
-  sample.here;
-}```
+
 Fully pluggable authentication and authorization system. Includes file, database, PicketLink and JAAS out-of-the-box.
 
 
@@ -64,6 +61,6 @@ Developed in the open by the people who use it. Join us!
 ```
 $ git clone https://github.com/uberfire/uberfire.git
 $ cd uberfire
-$ mvn install```
+$ mvn clean install```
 
 UberFire is licensed under the [Apache Software License, Version 2.0.](http://www.apache.org/licenses/LICENSE-2.0.html)
