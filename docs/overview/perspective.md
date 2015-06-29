@@ -3,7 +3,7 @@ An Uberfire Workbench contains one or more perspectives. The UberFire workbench 
 
 **Workbench → Perspective → Workbench Panel → Component**
 
-Perspectives split up the screen into multiple resizeable regions, and end users can drag and drop Panels between these regions to customize their workspace. Perspectives dictate the position and size of Workbench Panels.
+Perspectives split up the screen into multiple resizable regions, and end users can drag and drop Panels between these regions to customize their workspace. Perspectives dictate the position and size of Workbench Panels.
 
 ![perspective](perspective.png)
 
