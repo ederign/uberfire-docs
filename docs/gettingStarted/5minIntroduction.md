@@ -13,9 +13,9 @@ This guide assumes you have the following software set up and working on your co
 
 
 ```
-$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.7.0-SNAPSHOT
+$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.7.0.Beta2
 ```
-**Note**: If you get an error including "The desired archetype does not exist...", you may need to change the version "0.7.0-SNAPSHOT" to "0.7.0-FINAL".
+**Note**: If you get an error including "The desired archetype does not exist...", you may need to change the version "0.7.0.Beta2" to "0.7.0-FINAL".
 
  Maven will ask for your groupId, let's use:
 ```

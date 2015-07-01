@@ -27,9 +27,9 @@ Then visit the URL http://localhost:8080/ and you should see a webpage confirmin
 Now download the pre-built WAR file for the server you’ve installed and started.
 
 
-| Wildfly | [Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta1/showcase-distribution-wars-0.7.0.Beta1-wildfly8.1.war) |
+| Wildfly | [Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta2/showcase-distribution-wars-0.7.0.Beta2-wildfly8.1.war) |
 | -- | -- |
-| **Tomcat 7** | **[Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta1/showcase-distribution-wars-0.7.0.Beta1-tomcat7.0.war)** |
+| **Tomcat 7** | **[Download](https://repo1.maven.org/maven2/org/uberfire/showcase-distribution-wars/0.7.0.Beta2/showcase-distribution-wars-0.7.0.Beta2-tomcat7.0.war)** |
 
 **Note**: If you find that the war file has limited functionality, e.g. some perspectives do not work correctly, please build it from source.
 
@@ -63,19 +63,17 @@ You should notice some disk activity, and if you’re using Wildfly, you will se
 ##See it work!
 Now visit [http://localhost:8080/uberfire-showcase/](http://localhost:8080/uberfire-showcase/) and sign in with username **admin**, password **admin**.
 
-![dnd](drag-views.gif)
+![showcase](showcase.png)
 
 Once you’re logged in, here are some things to try:
 
 * Try switching perspectives in the perspective menu.
 
-* Try dragging a view from one panel to another.
+* On Home Perspective, try dragging a view clicking on TODO List and moving it from one panel to another.
 
 * Try adding a new location for views by dragging a view near the edge of the screen.
 
-* Try exploring the filesystem in the file explorer.
-
-* Try selecting a file and using the editor.
+* See some useful features on Screens menu..
 
 
 ##What next?
