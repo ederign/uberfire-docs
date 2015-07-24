@@ -1,4 +1,5 @@
 #Simple Docks
+
 Simple Docks is an implementation of Uberfire Docks support.
 
 ![docks](docks.png)
@@ -43,7 +44,7 @@ You also can set a different size of the dock open. You can define the size of a
 dock.withSize(500.0);
 ```
 ##Registering docks
-In order to register a dock, callregister method:
+In order to register a dock, call register method:
 ```
 docks.register(dock);
 ```
@@ -52,6 +53,7 @@ There is also a way to temporarily disable/enable a dock inside a perspective:
 docks.disable(UberfireDockPosition.EAST,"WiresScratchPadPerspective");
 docks.enable(UberfireDockPosition.EAST,"WiresScratchPadPerspective");
 ```
+
 
 
 
