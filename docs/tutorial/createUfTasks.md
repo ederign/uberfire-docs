@@ -4,12 +4,11 @@ Your UF Tasks project will follow the standard Maven project layout. So let's cr
 
 ## Creating UF Tasks Project
 
- In a command line, run the archetype to create your first app. [TODO Change archetype version after release]
+ In a command line, run the archetype to create your first app.
 
 ```
-$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.7.0.Beta2
+$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.7.4.Final
 ```
-**Note**: If you get an error including "The desired archetype does not exist...", you may need to change the version "0.7.0.Beta2" to "0.7.0-FINAL".
 
  Maven will ask for your groupId, let's use:
 ```
@@ -57,8 +56,8 @@ You should see the maven build success message again.
 
 How about running our project?
 ```
-cd uftasks-showcase/uftasks-webapp
-mvn clean gwt:run
+$ cd uftasks-showcase/uftasks-webapp
+$ mvn clean gwt:run
 ```
 Wait for GWT console build your app:
 

@@ -10,10 +10,10 @@ cd uftasks
 mvn clean install
 ```
 ##Get an app server
-UFTasks was generated from Uberfire Archetype. So inside uftasks-showcase, there is a directory called uftasks-distributions-wars that has inside target directory, WAR files for JBoss EAP 6.4, Tomcar 7.0 and Wildfly 8.1. Let's install this app on Tomcat 7.0
+UFTasks was generated from Uberfire Archetype. So inside uftasks-showcase, there is a directory called uftasks-distributions-wars that has, inside its target directory, WAR files for JBoss EAP 6.4, Tomcat 7.0 and Wildfly 8.1. Let's install this app on Tomcat 7.0.
 
 ##Get an app server
-If you don't already have Tomcat 7.0 installed on your computer, you can [download](http://tomcat.apache.org/download-70.cgi) and instalk it. Installing is as easy as downloading and unzipping.
+If you don't already have Tomcat 7.0 installed on your computer, you can [download](http://tomcat.apache.org/download-70.cgi) and install it. Installing is as easy as downloading and unzipping.
 
 ##Start the app server
 Now start the app server using a command line terminal. Use the cd command to change the working directory of your terminal to the place where you unzipped the application server, then execute one of the following commands, based on your operating system and choice of app server:

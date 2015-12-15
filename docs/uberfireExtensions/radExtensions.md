@@ -3,7 +3,7 @@ Uberfire RAD extensions or configurable workbench is  group of features divided 
 
 ##Plugin Management
 
-Uberfire can be extensible by JS and HTML in web app, but this is sometboth powerful and complex.
+Uberfire can be extensible by JS and HTML in web app, but this is both powerful and complex.
 
 Plugin Management comes to solve this issue, making our users able to create new perspectives, screens, editors, splash screens and menus via an UI inspired by [JSFiddle](http://jsfiddle.net/).
 

@@ -2,7 +2,7 @@
 
 The Ultimate Edition for Intellij IDEA comes with a built-in GWT plugin that allows you to run and debug GWT apps specifically. We can configure the plugin to use the embedded WildFly launcher for debugging ease, in order to debug both server and client-side code in one debug session. This section describes how to set up a GWT run/debug configuration within Intellij IDEA.
 
-(This instructions was tested on IntelliJ IDEA 14.1.3 - Ultimate)
+(This instructions was tested on  IntelliJ IDEA Ultimate 14.1.3 and 15.0.1)
 
 1. Click on open, and point to pom.xml file located on uftasks dir. (Wait for import and indexing)
 ![imported project](importedProject.png)
