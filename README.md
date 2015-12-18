@@ -6,6 +6,6 @@
 - Get gitbook editor from https://github.com/GitbookIO/editor-legacy
 - Get gitbook builder from https://github.com/GitbookIO/gitbook (you may need to install npm first)
 - Edit the docs in your forked repository uberfire-docs/docs in gitbook editor
-- When you've finished editing, build the docs by running uberfire-docs/docs/buildHtml.sh
-- View the built docs in docs/_book/index.html
+- When you've finished editing, build the docs by running uberfire-docs/buildHtml.sh and uberfire-docs/buildPdf.sh
+- View the built docs in uberfire-docs/docs/_book/index.html and uberfire-docs/uberfire-docs.pdf
 - Submit a pull request to get your changes accepted
