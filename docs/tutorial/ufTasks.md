@@ -1744,7 +1744,7 @@ Pay attention to placeManager.goTo( new DefaultPlaceRequest( "DashboardPerspecti
 This method is a Workbench-centric abstraction over the browser's history mechanism. Allows the application to initiate navigation
 to any displayable thing: a WorkbenchPerspective, a  WorkbenchScreen, a WorkbenchPopup, a WorkbenchEditor, a WorkbenchPart within a screen or editor, or the editor associated with a VFS file.
 
-###Time to see it work!
+##Time to see it work!
 
 Start the server, refresh the browser, create two projects and click in one of them. Create a new folder and add some tasks for it and mark some of them as done. Click on Dashboard menu:
 
