@@ -2,7 +2,7 @@
 #UF Tasks
 In order to understand how Uberfire works, let's create a simple task manager that will look like this:
 
-![UF tasks](ufTasks.png)
+![UF tasks](ufTasksFinal.png)
 
 On the left side, there is "Projects" section, where user can create Projects.
 
@@ -39,9 +39,7 @@ Perspectives split up the screen into multiple resizeable regions, and end users
 For now, we will create two Uberfire Screens (Project and Tasks) and one perspective to hold these screens.
 
 ###Creating Projects Screen
-Following the MVP pattern, each Uberfire Screen will be a Presenter plus a View. Our views will be built using [UI Binder](http://www.gwtproject.org/doc/latest/DevGuideUiBinder.html), so in that case we will have also a ui.xml file associated with each screen.
-
-(Feel free to choose another View technology, e.g. [Errai UI](https://docs.jboss.org/author/display/ERRAI/Errai+UI)).
+Following the MVP pattern, each Uberfire Screen will be a Presenter plus a View. Our views will be built using [Errai UI](https://docs.jboss.org/author/display/ERRAI/Errai+UI), so in that case we will have also a .html file associated with each screen.
 
 Inside the package org.uberfire.client.screens, create this new source file:
 
@@ -77,13 +75,12 @@ public class ProjectsPresenter {
     public UberView<ProjectsPresenter> getView() {
         return view;
     }
-
 }
 ```
 The presenter itself is a CDI bean with one injected field (the view). But whether or not we’re familiar with CDI, we’re seeing a bunch of Uberfire annotations for the first time. Let’s examine some of them:
 
-**@WorkbenchScreen
-**Tells UberFire that the class defines a Screen in the application. Each screen has an identifier.
+**@WorkbenchScreen**
+Tells Uberfire that the class defines a Screen in the application. Each screen has an identifier.
 
 **@WorkbenchPartTitle**
 Denotes the method that returns the Screen’s title. Every Screen must have a @WorkbenchPartTitle method.
@@ -97,54 +94,29 @@ Denotes the method that returns the Panel’s view. The view can be any class th
 ```
 package org.uberfire.client.screens;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 
+import com.google.gwt.user.client.ui.Composite;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+
 @Dependent
+@Templated
 public class ProjectsView extends Composite implements ProjectsPresenter.View {
 
-    interface Binder
-            extends
-            UiBinder<Widget, ProjectsView> {
-
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
-
     private ProjectsPresenter presenter;
-
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-    }
 
     @Override
     public void init( ProjectsPresenter presenter ) {
         this.presenter = presenter;
     }
-
 }
 ```
-- ProjectsView.ui.xml
+- ProjectsView.html
 
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-  <ui:with field='res' type='org.uberfire.client.resources.AppResource'/>
-  <g:FlowPanel>
-    <b:Label text="Project View"/>
-  </g:FlowPanel>
-
-</ui:UiBinder>
+<div class="container-fluid">
+    <label>Project View</label>
+</div>
 ```
 For now, this view has only a label telling "Project View".
 
@@ -179,7 +151,6 @@ public class TasksPresenter {
         return "Tasks";
     }
 
-
     @WorkbenchPartView
     public UberView<TasksPresenter> getView() {
         return view;
@@ -191,64 +162,33 @@ public class TasksPresenter {
 ```
 package org.uberfire.client.screens;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 
+import com.google.gwt.user.client.ui.Composite;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+
 @Dependent
+@Templated
 public class TasksView extends Composite implements TasksPresenter.View {
 
     private TasksPresenter presenter;
-
-    interface Binder
-            extends
-            UiBinder<Widget, TasksView> {
-
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
 
     @Override
     public void init( final TasksPresenter presenter ) {
         this.presenter = presenter;
     }
-
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-
-    }
 }
 ```
-- TasksView.ui.xml
+- TasksView.html
 
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-
-  <ui:with field='res' type='org.uberfire.client.resources.AppResource'/>
-  <ui:style>
-    .button {
-      margin-top: 5px;
-      margin-left: 5px;
-    }
-  </ui:style>
-  <g:FlowPanel>
-    <b:Label text="Project View"/>
-  </g:FlowPanel>
-</ui:UiBinder>
+<div class="container-fluid">
+    <label>Tasks View</label>
+</div>
 ```
 
 ###Creating Tasks Perspective
-Now we have a Screen, but nowhere to put it. Remember, the UberFire workbench UI is arranged as Workbench → Perspective → Workbench Panel → Screen. Perspectives dictate the position and size of Workbench Panels (besides the explicit positioning approach, we also can define perspectives using Errai UI templates).
+Now we have two Uberfire Screens, but nowhere to put it. Remember, the Uberfire Workbench UI is arranged as Workbench → Perspective → Workbench Panel → Screen. Perspectives dictate the position and size of Workbench Panels (besides the explicit positioning approach, we also can define perspectives using Errai UI templates).
 
 We need to define a Perspective (inside org.uberfire.client.perspectives):
 
@@ -256,6 +196,8 @@ We need to define a Perspective (inside org.uberfire.client.perspectives):
 
 ```
 package org.uberfire.client.perspectives;
+
+import javax.enterprise.context.ApplicationScoped;
 
 import org.uberfire.client.annotations.Perspective;
 import org.uberfire.client.annotations.WorkbenchPerspective;
@@ -269,15 +211,14 @@ import org.uberfire.workbench.model.impl.PanelDefinitionImpl;
 import org.uberfire.workbench.model.impl.PartDefinitionImpl;
 import org.uberfire.workbench.model.impl.PerspectiveDefinitionImpl;
 
-import javax.enterprise.context.ApplicationScoped;
-
 @ApplicationScoped
 @WorkbenchPerspective(identifier = "TasksPerspective", isDefault = true)
 public class TasksPerspective {
 
     @Perspective
     public PerspectiveDefinition buildPerspective() {
-        final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
+        final PerspectiveDefinitionImpl perspective =
+                new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
         perspective.setName( "TasksPerspective" );
 
         final PanelDefinition west = new PanelDefinitionImpl( SimpleWorkbenchPanelPresenter.class.getName() );
@@ -285,7 +226,7 @@ public class TasksPerspective {
         west.setWidth( 350 );
         perspective.getRoot().insertChild( CompassPosition.WEST, west );
 
-        perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "TasksPresenter" ) ));
+        perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "TasksPresenter" ) ) );
 
         return perspective;
     }
@@ -297,7 +238,7 @@ Once again, we’re encountering some new annotations:
 Tells UberFire that the class defines a perspective.
 
 **@Perspective**
-Tells UberFire that this method returns the PerspectiveDefinition that governs the perspective’s layout and default contents. Every @WorkbenchPerspective class needs a method annotated with @Perspective.
+Tells Uberfire that this method returns the PerspectiveDefinition that governs the perspective’s layout and default contents. Every @WorkbenchPerspective class needs a method annotated with @Perspective.
 
 In this definition, we’ll add a new panel on the left-hand side (WEST) and populate it with ProjectsPresenter by default. The perspective root panel (main window) will be populated with TasksPresenter.
 
@@ -329,13 +270,13 @@ Here’s what ProjectsPresenter.java might look like:
 ```
 package org.uberfire.client.screens;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
 import org.uberfire.client.mvp.UberView;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 @ApplicationScoped
 @WorkbenchScreen(identifier = "ProjectsPresenter")
@@ -344,6 +285,7 @@ public class ProjectsPresenter {
     public interface View extends UberView<ProjectsPresenter> {
 
         void clearProjects();
+
         void addProject( String projectName,
                          boolean selected );
     }
@@ -362,11 +304,11 @@ public class ProjectsPresenter {
     }
 
     public void newProject() {
-        //TODO
+        // TODO
     }
 
     public void selectProject( String projectName ) {
-        //TODO
+        // TODO
     }
 }
 ```
@@ -374,75 +316,46 @@ public class ProjectsPresenter {
 ###ProjectsView
 Our view has two components: a [Bootstrap3](https://gwtbootstrap3.github.io/gwtbootstrap3-demo/#listGroup) LinkedGroup to list our projects and a button to create new ones.
 
-Here’s what ProjectsView.ui.xml look like:
+Here’s what ProjectsView.html looks like:
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-  <ui:with field='res' type='org.uberfire.client.resources.AppResource'/>
-  <ui:style>
-    .button {
-      float: right;
-      margin-right: 5px;
-    }
-  </ui:style>
-  <g:FlowPanel>
-    <b:LinkedGroup ui:field="projects"/>
-    <b:Button styleName="{style.button}" type="PRIMARY" icon="PLUS" text="New Project" ui:field="newProject"/>
-  </g:FlowPanel>
-
-</ui:UiBinder>
+<div>
+    <div class="list-group" id="projects"></div>
+    <button type="button" class="btn btn-primary" id="new-project"
+            style="float: right; margin-right: 5px;">
+        <i class="fa fa-plus"></i> New Project
+    </button>
+</div>
 ```
 And the owner class for the above template might look like this:
 ```
 package org.uberfire.client.screens;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.LinkedGroup;
 import org.gwtbootstrap3.client.ui.LinkedGroupItem;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
 @Dependent
+@Templated
 public class ProjectsView extends Composite implements ProjectsPresenter.View {
-
-    interface Binder
-            extends
-            UiBinder<Widget, ProjectsView> {
-
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
 
     private ProjectsPresenter presenter;
 
-    @UiField
+    @Inject
+    @DataField("new-project")
     Button newProject;
 
-    @UiField
+    @Inject
+    @DataField("projects")
     LinkedGroup projects;
-
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-        newProject.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.newProject();
-            }
-        } );
-    }
 
     @Override
     public void init( ProjectsPresenter presenter ) {
@@ -456,48 +369,47 @@ public class ProjectsView extends Composite implements ProjectsPresenter.View {
 
     @Override
     public void addProject( final String projectName,
-                            final boolean active) {
+                            final boolean active ) {
         final LinkedGroupItem projectItem = createProjectItems( projectName, active );
         projects.add( projectItem );
     }
 
     private LinkedGroupItem createProjectItems( final String projectName,
-                                                boolean active ) {
+                                                final boolean active ) {
         final LinkedGroupItem projectItem = GWT.create( LinkedGroupItem.class );
         projectItem.setText( projectName );
         projectItem.setActive( active );
-        projectItem.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.selectProject( projectName );
-            }
-        } );
+        projectItem.addClickHandler( ( event ) -> presenter.selectProject( projectName ) );
         return projectItem;
     }
 
+    @EventHandler("new-project")
+    public void newProject( ClickEvent event ) {
+        presenter.newProject();
+    }
 }
 ```
-Two @UiFields to bind the template with the view Java class, an click handler to "New Project" button and a method to addAProject.
+Two @DataField attributes to bind the template with the view Java class, an click handler to "New Project" button and a method to add a project.
 This method should receive as parameter the projectName and a boolean representing if the project is active in the screen.
 
 ##Time to see our view working.
-Refresh the browser, let GWT Super Dev mode make his magic, and click on New Project button.
+Refresh the browser, let GWT Super Dev mode make his magic, and see the New Project button.
 
 ![New Project Clicked](newProjectClicked.png)
 
 ##New Project Screen
-The next step of our project is to provide a real implementation to new project button. To achieve this, let's create these classes on org.uberfire.client.screens.popup package:
+The next step of our project is to provide a real implementation to the New Project button. To achieve this, let's create these classes on org.uberfire.client.screens.popup package:
 
 **NewProjectPresenter.java**
 ```
 package org.uberfire.client.screens.popup;
 
-import org.uberfire.client.mvp.UberView;
-import org.uberfire.client.screens.ProjectsPresenter;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.uberfire.client.mvp.UberView;
+import org.uberfire.client.screens.ProjectsPresenter;
 
 @Dependent
 public class NewProjectPresenter {
@@ -505,7 +417,9 @@ public class NewProjectPresenter {
     private ProjectsPresenter projectsPresenter;
 
     public interface View extends UberView<NewProjectPresenter> {
+
         void show();
+
         void hide();
     }
 
@@ -513,11 +427,11 @@ public class NewProjectPresenter {
     private View view;
 
     @PostConstruct
-    public void setup(){
+    public void setup() {
         view.init( this );
     }
 
-    public void show( ProjectsPresenter projectsPresenter ){
+    public void show( ProjectsPresenter projectsPresenter ) {
         this.projectsPresenter = projectsPresenter;
         view.show();
     }
@@ -530,118 +444,102 @@ public class NewProjectPresenter {
     public void close() {
         view.hide();
     }
-
 }
 ```
-The method show(projectsPresenter) will open the modal on view. The method newProject(projectName) will create a new project on projectsPresenter and hide the view.
+The method show(projectsPresenter) will open the modal on the view. The method newProject(projectName) will create a new project on projectsPresenter and hide the view.
 
 **NewProjectView.java**
 ```
 package org.uberfire.client.screens.popup;
 
-import com.google.gwt.core.client.GWT;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Modal;
+import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
-import javax.annotation.PostConstruct;
-
-public class NewProjectView extends Composite
-        implements NewProjectPresenter.View {
-
-    interface Binder
-            extends
-            UiBinder<Widget, NewProjectView> {
-
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
-
-    @UiField
-    Modal popup;
-
-    @UiField
-    TextBox projectName;
-
-    @UiField
-    Button addGroup;
-
-    @UiField
-    Button cancel;
+@Dependent
+@Templated
+public class NewProjectView extends Composite implements NewProjectPresenter.View {
 
     private NewProjectPresenter presenter;
 
+    private Modal modal;
+
+    @Inject
+    @DataField("project-name")
+    TextBox projectNameTextBox;
+
+    @Inject
+    @DataField("ok-button")
+    Button okButton;
+
+    @Inject
+    @DataField("cancel-button")
+    Button cancelButton;
 
     @Override
     public void init( NewProjectPresenter presenter ) {
         this.presenter = presenter;
-    }
 
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-        cancel.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.close();
-            }
-        } );
-        addGroup.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.newProject( projectName.getText() );
-            }
-        } );
+        this.modal = new Modal();
+        final ModalBody body = new ModalBody();
+        body.add( this );
+        modal.add( body );
     }
 
     @Override
     public void show() {
-        popup.show();
+        modal.show();
     }
 
     @Override
     public void hide() {
-        popup.hide();
-        projectName.setText( "" );
+        modal.hide();
+        projectNameTextBox.setText( "" );
     }
 
+    @EventHandler("ok-button")
+    public void addProject( ClickEvent event ) {
+        presenter.newProject( projectNameTextBox.getText() );
+    }
+
+    @EventHandler("cancel-button")
+    public void cancel( ClickEvent event ) {
+        presenter.close();
+    }
 }
 ```
-**NewProjectView.ui.xml**
+**NewProjectView.html**
 ```
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-  <g:FlowPanel>
-    <b:Modal ui:field="popup">
-      <b:ModalBody>
-        <b:Form>
-          <b:FieldSet>
-                 <b:Legend>New Project</b:Legend>
-            <b:FormGroup>
-              <b:FormLabel for="name">Name</b:FormLabel>
-              <b:TextBox placeholder="Project name" ui:field="projectName"/>
-            </b:FormGroup>
-          </b:FieldSet>
-        </b:Form>
-      </b:ModalBody>
-      <b:ModalFooter>
-        <b:Button type="DANGER" ui:field="cancel">Cancel</b:Button>
-        <b:Button type="PRIMARY" ui:field="addGroup">OK</b:Button>
-      </b:ModalFooter>
-    </b:Modal>
-  </g:FlowPanel>
-</ui:UiBinder>
+<div>
+    <form data-field="new-project-modal">
+        <fieldset>
+            <legend>New Project</legend>
+            <div class="form-group">
+                <label class="control-label col-md-3">Name</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" data-field="project-name"
+                           placeholder="Project name">
+                    <span data-field="project-name-help" class="help-block"></span>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-field="cancel-button">Cancel</button>
+        <button type="button" class="btn btn-primary" data-field="ok-button">OK</button>
+    </div>
+</div>
 ```
-We have also to change **ProjectPresenter.java** in order to open the popup and receive the name of new project created. Add this snippet to our class:
+We have also to change **ProjectsPresenter.java** in order to open the popup and receive the name of new project created. Add this snippet to our class:
 ```
 import com.google.gwt.user.client.Window;
 import org.uberfire.client.screens.popup.NewProjectPresenter;
@@ -656,7 +554,7 @@ import org.uberfire.client.screens.popup.NewProjectPresenter;
     }
 
     public void createNewProject( String projectName ) {
-        Window.alert( "project created" + projectName );
+        Window.alert( "project created: " + projectName );
     }
 ```
 
@@ -668,7 +566,7 @@ Refresh your browser and click on new project button.
 ![new project](newProject.png)
 
 ##Adding projects to project's list
-Our next task is to finally add a project to projects list. First of all, let's create the Project model class. In package org.uberfire.share.model, create this class:
+Our next task is to finally add a project to projects list. First of all, let's create the Project model class. In package org.uberfire.shared.model, create this class:
 
 **Project.java**
 ```
@@ -695,7 +593,6 @@ public class Project {
     public void setSelected( boolean selected ) {
         this.selected = selected;
     }
-
 }
 ```
 Next, when the method createNewProject(project) is called, let's create a new model for that project and update the view. Add the following code to ProjectsPresenter.java:
@@ -753,7 +650,7 @@ public class ProjectSelectedEvent {
 }
 ```
 
-And also create these methods on **ProjectsPresenter.java**:
+And also add this code on **ProjectsPresenter.java**:
 ```
 import org.uberfire.shared.events.ProjectSelectedEvent;
 import javax.enterprise.event.Event;
@@ -779,7 +676,7 @@ import javax.enterprise.event.Event;
         updateView();
     }
 ```
-Let's detail the two important calls that happens inside selectProject(projectName) method:
+Let's detail the two important calls that happen inside selectProject(projectName) method:
 
 - setActiveProject(projectName): mark a specific project as active and update the view;
 - projectSelectEvent.fire(...): fires a CDI event telling TasksPresenter.java that a project was selected
@@ -805,33 +702,26 @@ Refresh the browser, create two projects and click in one of them.
 
 
 ##New folder
-Our next step is to create new folder button. A folder is an aggregator of tasks. This button is only displayed after a project is selected. Let's edit the view:
+Our next step is to create a new folder button. A folder is an aggregator of tasks. This button is only displayed after a project is selected. Let's edit the view:
 
-**TasksView.ui.xml**
+**TasksView.html**
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-
-  <ui:with field='res' type='org.uberfire.client.resources.AppResource'/>
-  <ui:style>
-    .button {
-      margin-top: 5px;
-      margin-left: 5px;
-    }
-  </ui:style>
-  <g:FlowPanel>
-    <g:FlowPanel ui:field="tasks"/>
-    <b:Button styleName="{style.button}" type="PRIMARY" icon="PLUS" text="New Folder" ui:field="newFolder"/>
-  </g:FlowPanel>
-</ui:UiBinder>
+<div>
+    <div class="list-group" data-field="tasks"></div>
+    <button type="button" class="btn btn-primary" data-field="new-folder">
+        <i class="fa fa-plus"></i> New Folder
+    </button>
+</div>
 ```
 Update your **TaskPresenter.java** with the following code:
 ```
 package org.uberfire.client.screens;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
@@ -839,12 +729,6 @@ import org.uberfire.client.annotations.WorkbenchScreen;
 import org.uberfire.client.mvp.UberView;
 import org.uberfire.client.screens.popup.NewFolderPresenter;
 import org.uberfire.shared.events.ProjectSelectedEvent;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @ApplicationScoped
 @WorkbenchScreen(identifier = "TasksPresenter")
@@ -864,10 +748,10 @@ public class TasksPresenter {
     @Inject
     private View view;
 
-    private String currentSelectedProject;
-
     @Inject
     private NewFolderPresenter newFolderPresenter;
+
+    private String currentSelectedProject;
 
     @WorkbenchPartTitle
     public String getTitle() {
@@ -895,7 +779,7 @@ public class TasksPresenter {
 
     private void updateView( String folderName ) {
         view.clearTasks();
-        if(folderName!=null){
+        if ( folderName != null ) {
             view.newFolder( folderName, 0, new ArrayList<String>() );
         }
     }
@@ -903,27 +787,28 @@ public class TasksPresenter {
     public void newFolder( String folderName ) {
         updateView( folderName );
     }
-
 }
 ```
-Pay attention to showNewFolder() method. This opens a popup to ask for folder name. The popup structure is like NewProject* structure. Let's create it inside package org.uberfire.client.screens.popup:
+We're going to use a popup structure, like NewProject* structure. Let's create it inside package org.uberfire.client.screens.popup:
 
 **NewFolderPresenter.java**
 ```
 package org.uberfire.client.screens.popup;
 
-import org.uberfire.client.mvp.UberView;
-import org.uberfire.client.screens.TasksPresenter;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+
+import org.uberfire.client.mvp.UberView;
+import org.uberfire.client.screens.TasksPresenter;
 
 @Dependent
 public class NewFolderPresenter {
 
     public interface View extends UberView<NewFolderPresenter> {
+
         void show();
+
         void hide();
     }
 
@@ -950,112 +835,99 @@ public class NewFolderPresenter {
     public void close() {
         view.hide();
     }
-
 }
 ```
 **NewFolderView.java**
 ```
 package org.uberfire.client.screens.popup;
 
-import com.google.gwt.core.client.GWT;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.Modal;
+import org.gwtbootstrap3.client.ui.ModalBody;
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
-import javax.annotation.PostConstruct;
-
+@Dependent
+@Templated
 public class NewFolderView extends Composite
         implements NewFolderPresenter.View {
 
-    interface Binder
-            extends
-            UiBinder<Widget, NewFolderView> {
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
-
-    @UiField
-    Modal popup;
-
-    @UiField
-    TextBox folderName;
-
-    @UiField
-    Button addFolder;
-
-    @UiField
-    Button cancel;
-
     private NewFolderPresenter presenter;
+
+    private Modal modal;
+
+    @Inject
+    @DataField("folder-name")
+    TextBox folderNameTextBox;
+
+    @Inject
+    @DataField("ok-button")
+    Button okButton;
+
+    @Inject
+    @DataField("cancel-button")
+    Button cancelButton;
 
     @Override
     public void init( NewFolderPresenter presenter ) {
         this.presenter = presenter;
-    }
 
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-        cancel.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.close();
-            }
-        } );
-        addFolder.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.newFolder( folderName.getText() );
-            }
-        } );
+        this.modal = new Modal();
+        final ModalBody body = new ModalBody();
+        body.add( this );
+        modal.add( body );
     }
 
     @Override
     public void show() {
-        popup.show();
+        modal.show();
     }
 
     @Override
     public void hide() {
-        popup.hide();
-        folderName.setText( "" );
+        modal.hide();
+        folderNameTextBox.setText( "" );
     }
 
+    @EventHandler("ok-button")
+    public void addFolder( ClickEvent event ) {
+        presenter.newFolder( folderNameTextBox.getText() );
+    }
+
+    @EventHandler("cancel-button")
+    public void cancel( ClickEvent event ) {
+        presenter.close();
+    }
 }
 ```
-**NewFolderView.ui.xml**
+**NewFolderView.html**
 ```
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
-
-  <g:FlowPanel>
-    <b:Modal ui:field="popup">
-      <b:ModalBody>
-        <b:Form>
-          <b:FieldSet>
-                 <b:Legend>New Folder</b:Legend>
-            <b:FormGroup>
-              <b:FormLabel for="name">Name</b:FormLabel>
-              <b:TextBox placeholder="Folder name" ui:field="folderName"/>
-            </b:FormGroup>
-          </b:FieldSet>
-        </b:Form>
-      </b:ModalBody>
-      <b:ModalFooter>
-        <b:Button type="DANGER" ui:field="cancel">Cancel</b:Button>
-        <b:Button type="PRIMARY" ui:field="addFolder">OK</b:Button>
-      </b:ModalFooter>
-    </b:Modal>
-  </g:FlowPanel>
-</ui:UiBinder>
+<div>
+    <form data-field="new-folder-modal">
+        <fieldset>
+            <legend>New Folder</legend>
+            <div class="form-group">
+                <label class="control-label col-md-3">Name</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" data-field="folder-name"
+                           placeholder="Folder name">
+                    <span data-field="project-name-help" class="help-block"></span>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-field="cancel-button">Cancel</button>
+        <button type="button" class="btn btn-primary" data-field="ok-button">OK</button>
+    </div>
+</div>
 ```
 
 ####Time to add some tasks
@@ -1101,6 +973,14 @@ Now update the **TasksPresenter.java** in order to support the creation of tasks
 ```
 package org.uberfire.client.screens;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+
 import org.uberfire.client.annotations.WorkbenchPartTitle;
 import org.uberfire.client.annotations.WorkbenchPartView;
 import org.uberfire.client.annotations.WorkbenchScreen;
@@ -1108,14 +988,6 @@ import org.uberfire.client.mvp.UberView;
 import org.uberfire.client.screens.popup.NewFolderPresenter;
 import org.uberfire.shared.events.ProjectSelectedEvent;
 import org.uberfire.shared.model.Folder;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 @WorkbenchScreen(identifier = "TasksPresenter")
@@ -1219,48 +1091,50 @@ public class TasksPresenter {
 ```
 Let's highlight some important pieces of code
 
-- Map< String, List < Folder > > foldersPerProject: keeps a in memory map of folders for each project selected;
+- Map< String, List < Folder > > foldersPerProject: keeps an in memory map of folders for each project selected;
 - createTask(folderName,task): add a task for a specific folder. This is triggered by addTasks text box;
 - doneTask(folderName,taskText): after a task is marked as done, remove it from folder;
 - newFolder(folderName): create a new folder and add it in persistence structure (folderPerProject).
 
 
-It's update the **TasksView.java** in order to support the creation of tasks.
+Let's update the **TasksView.java** in order to support the creation of tasks.
 ```
 package org.uberfire.client.screens;
 
+import java.util.List;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.*;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Widget;
-import org.gwtbootstrap3.client.ui.*;
+import org.gwtbootstrap3.client.ui.Badge;
+import org.gwtbootstrap3.client.ui.Button;
+import org.gwtbootstrap3.client.ui.InlineCheckBox;
+import org.gwtbootstrap3.client.ui.InputGroup;
+import org.gwtbootstrap3.client.ui.ListGroup;
+import org.gwtbootstrap3.client.ui.ListGroupItem;
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.client.ui.constants.ListGroupItemType;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
-import java.util.List;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.EventHandler;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
 @Dependent
+@Templated
 public class TasksView extends Composite implements TasksPresenter.View {
-
-    @UiField
-    Button newFolder;
-
-    @UiField
-    FlowPanel tasks;
 
     private TasksPresenter presenter;
 
-    interface Binder
-            extends
-            UiBinder<Widget, TasksView> {
+    @Inject
+    @DataField("new-folder")
+    Button newFolder;
 
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
+    @Inject
+    @DataField("tasks")
+    FlowPanel tasks;
 
     @Override
     public void init( final TasksPresenter presenter ) {
@@ -1268,21 +1142,9 @@ public class TasksView extends Composite implements TasksPresenter.View {
         this.newFolder.setVisible( false );
     }
 
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-
-    }
-
     @Override
-    public void activateNewFolder( ) {
+    public void activateNewFolder() {
         newFolder.setVisible( true );
-        newFolder.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.showNewFolder();
-            }
-        } );
     }
 
     @Override
@@ -1297,34 +1159,35 @@ public class TasksView extends Composite implements TasksPresenter.View {
 
         ListGroup folder = GWT.create( ListGroup.class );
         folder.add( generateFolderTitle( folderName, numberOfTasks ) );
-
         for ( String task : tasksList ) {
             folder.add( generateTask( folderName, task ) );
         }
         folder.add( generateNewTask( folderName ) );
+
         tasks.add( folder );
     }
 
     private ListGroupItem generateNewTask( String folderName ) {
         ListGroupItem newTask = GWT.create( ListGroupItem.class );
+
         InputGroup inputGroup = GWT.create( InputGroup.class );
         inputGroup.add( createTextBox( folderName ) );
+
         newTask.add( inputGroup );
+
         return newTask;
     }
 
     private TextBox createTextBox( final String folderName ) {
         final TextBox taskText = GWT.create( TextBox.class );
-        taskText.addKeyDownHandler( new KeyDownHandler() {
-            @Override
-            public void onKeyDown( KeyDownEvent event ) {
-                if ( event.getNativeKeyCode() == KeyCodes.KEY_ENTER ) {
-                    presenter.createTask( folderName, taskText.getText() );
-                }
-            }
-        } );
         taskText.setWidth( "400" );
         taskText.setPlaceholder( "New task..." );
+        taskText.addKeyDownHandler( event -> {
+            if ( event.getNativeKeyCode() == KeyCodes.KEY_ENTER ) {
+                presenter.createTask( folderName, taskText.getText() );
+            }
+        } );
+
         return taskText;
     }
 
@@ -1333,9 +1196,12 @@ public class TasksView extends Composite implements TasksPresenter.View {
         ListGroupItem folderTitle = GWT.create( ListGroupItem.class );
         folderTitle.setText( name );
         folderTitle.setType( ListGroupItemType.INFO );
+
         Badge number = GWT.create( Badge.class );
         number.setText( String.valueOf( numberOfTasks ) );
+
         folderTitle.add( number );
+
         return folderTitle;
     }
 
@@ -1343,22 +1209,23 @@ public class TasksView extends Composite implements TasksPresenter.View {
                                         String taskText ) {
         ListGroupItem tasks = GWT.create( ListGroupItem.class );
         tasks.add( createTaskCheckbox( folderName, taskText ) );
+
         return tasks;
     }
 
     private InlineCheckBox createTaskCheckbox( final String folderName,
                                                final String taskText ) {
         InlineCheckBox checkBox = GWT.create( InlineCheckBox.class );
-        checkBox.addClickHandler( new ClickHandler() {
-            @Override
-            public void onClick( ClickEvent event ) {
-                presenter.doneTask( folderName, taskText );
-            }
-        } );
         checkBox.setText( taskText );
+        checkBox.addClickHandler( event -> presenter.doneTask( folderName, taskText ) );
+
         return checkBox;
     }
 
+    @EventHandler("new-folder")
+    public void newFolderClick( ClickEvent event ) {
+        presenter.showNewFolder();
+    }
 }
 ```
 
@@ -1376,7 +1243,7 @@ In order to get in touch with some important Uberfire concepts like adding more 
 
 This dashboard will count the number of tasks created and done by project and will look like this:
 
-![dashboard](dashboard.png)
+![dashboard](dashboardFinal.png)
 
 Because we are writing new perspectives, screens and Uberfire needs to generate some code, stop the server and let's back to work.
 
@@ -1402,7 +1269,8 @@ public class DashboardPerspective {
 
     @Perspective
     public PerspectiveDefinition buildPerspective() {
-        final PerspectiveDefinitionImpl perspective = new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
+        final PerspectiveDefinitionImpl perspective =
+                new PerspectiveDefinitionImpl( MultiListWorkbenchPanelPresenter.class.getName() );
         perspective.setName( "DashboardPerspective" );
 
         perspective.getRoot().addPart( new PartDefinitionImpl( new DefaultPlaceRequest( "DashboardPresenter" ) ));
@@ -1515,12 +1383,11 @@ public class DashboardPresenter {
             return String.valueOf( tasksCreated );
         }
     }
-
 }
 ```
 This presenter has a Map and a utility class to keep track of tasks created and done. But how we keep track of the tasks changes? Let's pay a close attention to these methods:
 ```
-  public void taskCreated( @Observes TaskCreated taskCreated ) {
+    public void taskCreated( @Observes TaskCreated taskCreated ) {
         ProjectTasksCounter projectTasksCounter = getProjectTasksCounter( taskCreated.getProject() );
         projectTasksCounter.taskCreated();
     }
@@ -1580,7 +1447,7 @@ public class TaskDone {
     }
 }
 ```
-Remember that the TaskPresenter create and mark as done tasks? So let's change these methods to fire a CDI event:
+Remember that the TaskPresenter creates and marks tasks as done? So let's change these methods to fire a CDI event:
 ```
 import org.uberfire.shared.events.TaskCreated;
 import org.uberfire.shared.events.TaskDone;
@@ -1623,40 +1490,28 @@ Now it's time to create our view classes (org.uberfire.client.screens package):
 ```
 package org.uberfire.client.screens;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Widget;
 import org.gwtbootstrap3.client.ui.Badge;
 import org.gwtbootstrap3.client.ui.ListGroup;
 import org.gwtbootstrap3.client.ui.ListGroupItem;
 import org.gwtbootstrap3.client.ui.constants.ListGroupItemType;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 
 @Dependent
+@Templated
 public class DashboardView extends Composite implements DashboardPresenter.View {
-
-    interface Binder
-            extends
-            UiBinder<Widget, DashboardView> {
-
-    }
-
-    private static Binder uiBinder = GWT.create( Binder.class );
 
     private DashboardPresenter presenter;
 
-    @UiField
+    @Inject
+    @DataField("projects")
     FlowPanel projects;
-
-    @PostConstruct
-    public void setup() {
-        initWidget( uiBinder.createAndBindUi( this ) );
-    }
 
     @Override
     public void init( DashboardPresenter presenter ) {
@@ -1664,9 +1519,9 @@ public class DashboardView extends Composite implements DashboardPresenter.View 
     }
 
     @Override
-    public void addProject( String project,
-                            String tasksCreated,
-                            String tasksDone ) {
+    public void addProject( final String project,
+                            final String tasksCreated,
+                            final String tasksDone ) {
         ListGroup projectGroup = GWT.create( ListGroup.class );
 
         projectGroup.add( createListGroupItem( ListGroupItemType.INFO, project.toUpperCase(), null ) );
@@ -1681,10 +1536,11 @@ public class DashboardView extends Composite implements DashboardPresenter.View 
         projects.clear();
     }
 
-    private ListGroupItem createListGroupItem( ListGroupItemType type,
-                                               String text,
-                                               String number ) {
+    private ListGroupItem createListGroupItem( final ListGroupItemType type,
+                                               final String text,
+                                               final String number ) {
         ListGroupItem item = GWT.create( ListGroupItem.class );
+
         item.setType( type );
         item.setText( text );
         if ( number != null ) {
@@ -1692,25 +1548,14 @@ public class DashboardView extends Composite implements DashboardPresenter.View 
             numberBadge.setText( number );
             item.add( numberBadge );
         }
+
         return item;
     }
-
 }
 ```
-**DashboardView.ui.xml**
+**DashboardView.html**
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui"
-    >
-
-  <ui:with field='res' type='org.uberfire.client.resources.AppResource'/>
-
-  <g:FlowPanel ui:field="projects"/>
-
-
-</ui:UiBinder>
+<div class="list-group" data-field="projects"></div>
 ```
 
 ###Create Perspective Menu
@@ -1720,21 +1565,13 @@ Now it's time to put this work on our app menu. Open ShowcaseEntryPoint.java and
     private void setupMenu( @Observes final ApplicationReadyEvent event ) {
         final Menus menus =
                 newTopLevelMenu( "UF Tasks" )
-                        .respondsWith( new Command() {
-                            @Override
-                            public void execute() {
-                                placeManager.goTo( new DefaultPlaceRequest( "TasksPerspective" ) );
-                            }
-                        } )
-                        .endMenu().
-        newTopLevelMenu( "Dashboard" )
-                .respondsWith( new Command() {
-                    @Override
-                    public void execute() {
-                        placeManager.goTo( new DefaultPlaceRequest( "DashboardPerspective" ) );
-                    }
-                } )
-                .endMenu()
+                        .respondsWith(
+                                () -> placeManager.goTo( new DefaultPlaceRequest( "TasksPerspective" ) ) )
+                        .endMenu()
+                        .newTopLevelMenu( "Dashboard" )
+                        .respondsWith(
+                                () -> placeManager.goTo( new DefaultPlaceRequest( "DashboardPerspective" ) ) )
+                        .endMenu()
                         .build();
 
         menubar.addMenus( menus );

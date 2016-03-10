@@ -1,6 +1,6 @@
 # Intellij IDEA
 
-The Ultimate Edition for Intellij IDEA comes with a built-in GWT plugin that allows you to run and debug GWT apps specifically. We can configure the plugin to use the embedded WildFly launcher for debugging ease, in order to debug both server and client-side code in one debug session. This section describes how to set up a GWT run/debug configuration within Intellij IDEA.
+The Ultimate Edition for Intellij IDEA comes with a built-in GWT plugin that allows you to run and debug GWT apps specifically. We can configure the plugin to use the embedded WildFly launcher for ease debugging, in order to debug both server and client-side code in one debug session. This section describes how to set up a GWT run/debug configuration within Intellij IDEA.
 
 (This instructions was tested on  IntelliJ IDEA Ultimate 14.1.3 and 15.0.1)
 
@@ -24,7 +24,7 @@ The Ultimate Edition for Intellij IDEA comes with a built-in GWT plugin that all
 
  **VM options**: -Xmx2048m -XX:MaxPermSize=512M -Derrai.jboss.home=/Users/ederign/projects/uftasks/uftasks-showcase/uftasks-webapp/target/wildfly-8.1.0.Final/
 
-Where errai.jboss.home points to your WildFly installation directory. This can either be your local WildFly installation directory, or in the target/ directory of your app. For the UFTasks app, errai.jboss.home points to the WildFly installation within the target/ directory, which is redownloaded and installed as part of the build.
+The errai.jboss.home parameter must point to your local WildFly installation directory or the Wildfly within the target/ directory of your app. For the UFTasks app, errai.jboss.home points to the WildFly installation within the target/ directory, which is redownloaded and installed as part of the build.
 
 **Dev Mode Parameters**:
 -server org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher

@@ -2,35 +2,45 @@
 
 Your UF Tasks project will follow the standard Maven project layout. So let's create it using our archetype.
 
+## Cloning Uberfire
+
+First, let's clone Uberfire repository, so we have the most recent archetype available. Go to your preferred directory and run one of the following commands:
+
+HTTPS mode:
+```
+$ git clone https://github.com/uberfire/uberfire.git
+```
+or SSH mode:
+```
+$ git clone git@github.com:uberfire/uberfire.git
+```
+
+## Building Uberfire
+
+Now let's build Uberfire, and make our archetype available for use:
+```
+$ cd uberfire
+$ mvn clean install -DskipTests=true -Dgwt.compiler.skip=true
+```
+This will create the archetype and store it in your ~/.m2 directory.
+
 ## Creating UF Tasks Project
 
- In a command line, run the archetype to create your first app.
+ In a command line, go to your preferred directory and run this command to create your first app:
 
 ```
-$ mvn archetype:generate -DarchetypeGroupId=org.uberfire -DarchetypeArtifactId=uberfire-project-archetype -DarchetypeVersion=0.7.4.Final
+$ mvn archetype:generate -B \
+-DarchetypeGroupId=org.uberfire \
+-DarchetypeArtifactId=uberfire-project-archetype \
+-DarchetypeVersion=0.9.0-SNAPSHOT \
+-DgroupId=org.uberfire \
+-DartifactId=uftasks \
+-Dversion=1.0-SNAPSHOT\
+-Dpackage=org.uberfire \
+-DcapitalizedRootArtifactId=UFTasks
 ```
 
- Maven will ask for your groupId, let's use:
-```
-org.uberfire
-```
-For the artifactId value:
-```
-uftasks
-```
-For version
-```
-1.0-SNAPSHOT
-```
-For package
-```
-org.uberfire
-```
-Use default value for package, for capitalizedRootArtifactId use:
-```
-UFTasks
-```
-Confirm your changes and then you should see the message:
+And then you should see a message like this:
 ```
 [INFO] ---------------------------------------------------------
 [INFO] BUILD SUCCESS
@@ -39,16 +49,15 @@ Confirm your changes and then you should see the message:
 [INFO] Finished at: Wed Jan 14 20:30:27 BRST 2015
 [INFO] Final Memory: 29M/959M
 [INFO] ---------------------------------------------------------
-````
-## Building your App
-
-To build your app, go to directory uftasks, build the project in maven and wait for the build finish.
-
 ```
 
+## Building your App
+
+To build your app, go to directory uftasks, build the project in maven and wait for the build to finish.
+
+```
 $ cd uftasks
 $ mvn clean install
-
 ```
 You should see the maven build success message again.
 
@@ -63,7 +72,7 @@ Wait for GWT console build your app:
 
 ![gwt build](gwt-console.png)
 
-Click on "Launch Default Browser" to open your Uberfire App. Log in as admin (Username) with admin (as Password). You should see our Hello World.
+Click on "Launch Default Browser" to open your Uberfire App. Log in with the username "admin" and the password "admin". You should see our Hello World screen!
 
 ![app start](appStart.png)
 

@@ -76,7 +76,7 @@ Once you’re logged in, here are some things to try:
 * See some useful features on Screens menu..
 
 
-##What next?
+##What's next?
 Now that you’ve created and deployed an UberFire app and had some hands-on time with it, why not create a more complex App? Our tutorial guide provides a detailed walkthrough to create a Task Manager using Uberfire.
 
 
