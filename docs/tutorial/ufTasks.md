@@ -242,6 +242,36 @@ Tells Uberfire that this method returns the PerspectiveDefinition that governs t
 
 In this definition, we’ll add a new panel on the left-hand side (WEST) and populate it with ProjectsPresenter by default. The perspective root panel (main window) will be populated with TasksPresenter.
 
+
+###Modifying application entry point
+
+
+
+Inside the package org.uberfire.client, modify the setup method like follows to create a menu item to the "TaskPerspective" we just defined before (instead of the "MainPerspective"):
+
+- ShowcaseEntryPoint.java
+
+
+```
+private void setupMenu( @Observes final ApplicationReadyEvent event ) {
+    final Menus menus =
+            newTopLevelMenu( "Home" )
+                    .respondsWith( new Command() {
+                        @Override
+                        public void execute() {
+                            placeManager.goTo( new DefaultPlaceRequest( "TasksPerspective" ) );
+                        }
+                    } )
+                    .endMenu()
+                    .build();
+
+    menubar.addMenus( menus );
+}
+```
+
+
+
+
 ##Time to see it work!
 We’ve come a long way since we started with that empty directory. Let’s reward all the hard work by starting our app and seeing it do something!
 
