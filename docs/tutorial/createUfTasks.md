@@ -4,7 +4,7 @@ Your UF Tasks project will follow the standard Maven project layout. So let's cr
 
 ## Cloning Uberfire
 
-First, let's clone Uberfire repository, so we have the most recent archetype available. Go to your preferred directory and run one of the following commands:
+First, let's clone the Uberfire repository, so we have the most recent archetype available. Go to your preferred directory and run one of the following commands:
 
 HTTPS mode:
 ```
@@ -14,6 +14,8 @@ or SSH mode:
 ```
 $ git clone git@github.com:uberfire/uberfire.git
 ```
+
+**Microsoft Windows Users:** Be sure to set the git core.longpaths configuration variable to "true". Some of Uberfire's file names are longer than 255 characters and the git shell will complain about "Filename too long" and simply skip over them.
 
 ## Building Uberfire
 
@@ -68,7 +70,7 @@ How about running our project?
 $ cd uftasks-showcase/uftasks-webapp
 $ mvn clean gwt:run
 ```
-Wait for GWT console build your app:
+Wait for GWT console to build your app:
 
 ![gwt build](gwt-console.png)
 

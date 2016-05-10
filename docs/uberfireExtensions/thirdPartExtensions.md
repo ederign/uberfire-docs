@@ -1,1 +1,1 @@
-#Third Part Extensions
+#Third Party Extensions
