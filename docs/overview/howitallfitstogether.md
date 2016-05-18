@@ -1,5 +1,5 @@
 # How it all fits together
-Build on the strengths of [GWT](http://www.gwtproject.org/) and [ERRAI](http://erraiframework.org/), Uberfire allow you to write and maintain your application code in the Java programming language with all of the Java tooling at your disposal, then deploy it to the browser as a native JavaScript + HTML application.
+Built on the strengths of [GWT](http://www.gwtproject.org/) and [ERRAI](http://erraiframework.org/), Uberfire allows you to write and maintain your application code in the Java programming language with all of the Java tooling at your disposal, then deploy it to the browser as a native JavaScript + HTML application.
 
 ![code flow shart](shared-code-flowchart.png)
 
@@ -11,7 +11,7 @@ Here we will highlight some key features of the framework.
 
 One key aspect for UberFire is the compile time composition of plugins. Everything is a plugin, so it's very extensible. Uberfire also defines a set of interfaces and life cycle events, making it simple to build extensions of the framework.
 
-Each plugin is a maven module, so when building a distribution, you simple need to add those maven modules as dependencies and they are avaliable to use in your web app.
+Each plugin is a maven module, so when building a distribution, you simply need to add those maven modules as dependencies and they are avaliable to use in your web app.
 
 ### Flexible Layout
 

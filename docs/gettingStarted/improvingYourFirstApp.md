@@ -1,8 +1,8 @@
 #Improving your first App
-In this session, we will create some basic Uberfire components aiming to give you an idea of how Uberfire works. For now, doesn’t pay to much attention to new terms and concepts that we will present, it’s time to only have fun.
+In this session, we will create some basic Uberfire components aiming to give you an idea of how Uberfire works. For now, don’t pay too much attention to new terms and concepts presented here, it’s time to just have fun.
 The Uberfire Architeture and details of how everything glues together will be presented in the [Tutorial](../tutorial/tutorial.md) section.
 
-## Felling Uberfire
+## Feeling Uberfire
 Let’s change our App so we can get a better feel for how Uberfire workbench perspectives and panels fit together.
 
 We’ll create two screens backed by a simple model class to demonstrate how you’d typically separate model from view in an UberFire application and how screens communicate in a decoupled way.
@@ -223,10 +223,10 @@ Build and run your App again (mvn gwt: clean gwt:compile gwt:run), write a text 
 ![hello world](moodPerspective.png)
 
 
-### A taste on Uberfire lifecycle events
-Uberfire support a lot of workbench events, let's see them working?
+### A taste of Uberfire lifecycle events
+Uberfire supports a lot of workbench events, let's see how they work.
 
-Edit MoodPerspective.java and add this two methods, run the app again and change perspectives to see the events happening.
+Edit MoodPerspective.java and add these two methods, run the app again and change perspectives to see the events happening.
 
 ```
     @OnOpen
@@ -239,4 +239,4 @@ Edit MoodPerspective.java and add this two methods, run the app again and change
         Window.alert( "On Close" );
     }
 ```
-Build (mvn clean install) and run your App again (mvn clean gwt:run) and change perspectives to see the events raising.
+Build (mvn clean install) and run your App again (mvn clean gwt:run) and change perspectives to see the events being triggered.

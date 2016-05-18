@@ -4,19 +4,19 @@ In order to understand how Uberfire works, let's create a simple task manager th
 
 ![UF tasks](ufTasksFinal.png)
 
-On the left side, there is "Projects" section, where user can create Projects.
+On the left side is a "Projects" section, where the user can create Projects.
 
 Each project has a group of folders (displayed in the main window), and each folder has a group of tasks.
 
-A task can be created in the text field "New Task" and can me mark as *Done* with the checkbox in the left of task description.
+A task can be created in the text field "New Task" and can be marked as *Done* with the checkbox left of the task description.
 
 ##Uberfire Design Guidelines
 
-Before write some real code, it's important to get in contact with the pattern [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter), because this is how our tutorial was developed.
+Before you can start writing code, it's important to familiarize yourself with the [MVP Pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) to better understand this tutorial.
 
 
 ###MVP Pattern
-MVP (Model-View-Presenter) like any pattern is open to different interpretation, so here is what MVP was used in this tutorial:
+MVP (Model-View-Presenter) like any pattern is open to different interpretation, so here is how MVP is used in this tutorial:
 
 - Model is POJO;
 
@@ -26,7 +26,7 @@ MVP (Model-View-Presenter) like any pattern is open to different interpretation,
 ![MVP](mvp.png)
 
 ##Cleaning the Archetype
-Uberfire Archetype contains some useful code samples that are not necessary in our app. Let's clean up.
+Uberfire Archetype contains some useful code samples that are not necessary in our app, so let's do some cleanup first.
 
 Please delete these files: SharedSample.java, HelloWorldScreen.java, HelloWorldScreen.ui.xml and  MainPerspective.java.
 
@@ -39,7 +39,7 @@ Perspectives split up the screen into multiple resizeable regions, and end users
 For now, we will create two Uberfire Screens (Project and Tasks) and one perspective to hold these screens.
 
 ###Creating Projects Screen
-Following the MVP pattern, each Uberfire Screen will be a Presenter plus a View. Our views will be built using [Errai UI](https://docs.jboss.org/author/display/ERRAI/Errai+UI), so in that case we will have also a .html file associated with each screen.
+Following the MVP pattern, each Uberfire Screen will be a Presenter plus a View. Our views will be built using [Errai UI](https://docs.jboss.org/author/display/ERRAI/Errai+UI). This means we will also have an .html file associated with each screen.
 
 Inside the package org.uberfire.client.screens, create this new source file:
 
@@ -118,7 +118,7 @@ public class ProjectsView extends Composite implements ProjectsPresenter.View {
     <label>Project View</label>
 </div>
 ```
-For now, this view has only a label telling "Project View".
+For now, this view only has a label with the text "Project View".
 
 ###Creating Tasks Screen
 Our second screen is the Task Screen. Let's create it (inside org.uberfire.client.screens package):
@@ -188,9 +188,9 @@ public class TasksView extends Composite implements TasksPresenter.View {
 ```
 
 ###Creating Tasks Perspective
-Now we have two Uberfire Screens, but nowhere to put it. Remember, the Uberfire Workbench UI is arranged as Workbench → Perspective → Workbench Panel → Screen. Perspectives dictate the position and size of Workbench Panels (besides the explicit positioning approach, we also can define perspectives using Errai UI templates).
+Now we have two Uberfire Screens, but nowhere to put them. Remember, the Uberfire Workbench UI is arranged as Workbench → Perspective → Workbench Panel → Screen. Perspectives dictate the position and size of Workbench Panels. Besides the explicit positioning approach, we can also define perspectives using Errai UI templates.
 
-We need to define a Perspective (inside org.uberfire.client.perspectives):
+We need to define a Perspective inside org.uberfire.client.perspectives:
 
 - TasksPerspective.java
 
@@ -247,7 +247,7 @@ In this definition, we’ll add a new panel on the left-hand side (WEST) and pop
 
 
 
-Inside the package org.uberfire.client, modify the setup method like follows to create a menu item to the "TaskPerspective" we just defined before (instead of the "MainPerspective"):
+Inside the package org.uberfire.client, modify the setup method as follows to create a menu item in the "TaskPerspective" we just defined before (instead of the "MainPerspective"):
 
 - ShowcaseEntryPoint.java
 
@@ -293,7 +293,7 @@ And our app running:
 
 
 ##Projects Screen
-Now we have the basic infrastructure required to our project, it's time to put some functionality in the Project Screen. Let's begin by the ProjectsPresenter.
+Now that we have the basic infrastructure required for our project, it's time to put some functionality in the Project Screen. Let's begin with the ProjectsPresenter.
 
 ###ProjectsPresenter
 Here’s what ProjectsPresenter.java might look like:
@@ -419,16 +419,16 @@ public class ProjectsView extends Composite implements ProjectsPresenter.View {
     }
 }
 ```
-Two @DataField attributes to bind the template with the view Java class, an click handler to "New Project" button and a method to add a project.
-This method should receive as parameter the projectName and a boolean representing if the project is active in the screen.
+Two @DataField attributes to bind the template with the view Java class, a click handler for the "New Project" button and a method to add a project.
+This method should receive as parameters the projectName and a boolean representing if the project is active in the screen.
 
 ##Time to see our view working.
-Refresh the browser, let GWT Super Dev mode make his magic, and see the New Project button.
+Refresh the browser, let GWT Super Dev mode do its magic, and we should see the New Project button.
 
 ![New Project Clicked](newProjectClicked.png)
 
 ##New Project Screen
-The next step of our project is to provide a real implementation to the New Project button. To achieve this, let's create these classes on org.uberfire.client.screens.popup package:
+The next step of our project is to provide a real implementation for the New Project button. To achieve this, let's create these classes on org.uberfire.client.screens.popup package:
 
 **NewProjectPresenter.java**
 ```
@@ -476,7 +476,7 @@ public class NewProjectPresenter {
     }
 }
 ```
-The method show(projectsPresenter) will open the modal on the view. The method newProject(projectName) will create a new project on projectsPresenter and hide the view.
+The method show(projectsPresenter) will open the modal dialog on the view. The method newProject(projectName) will create a new project on projectsPresenter and hide the view.
 
 **NewProjectView.java**
 ```
@@ -569,7 +569,7 @@ public class NewProjectView extends Composite implements NewProjectPresenter.Vie
     </div>
 </div>
 ```
-We have also to change **ProjectsPresenter.java** in order to open the popup and receive the name of new project created. Add this snippet to our class:
+We also have to change **ProjectsPresenter.java** in order to open the popup and receive the name of the new project created. Add this snippet to our class:
 ```
 import com.google.gwt.user.client.Window;
 import org.uberfire.client.screens.popup.NewProjectPresenter;
@@ -589,14 +589,14 @@ import org.uberfire.client.screens.popup.NewProjectPresenter;
 ```
 
 ##Time to see it work!
-Let’s see all the hard work by starting our app and seeing it opening the popup and displaying the project created message!
+Let’s see the results of all our hard work: start the app and watch it open the popup dialog displaying the project created message!
 
-Refresh your browser and click on new project button.
+Refresh your browser and click on the New Project button.
 
 ![new project](newProject.png)
 
-##Adding projects to project's list
-Our next task is to finally add a project to projects list. First of all, let's create the Project model class. In package org.uberfire.shared.model, create this class:
+##Adding a project to the projects list
+Our next task is to add a project to the projects list. First of all, let's create the Project model class. In package org.uberfire.shared.model, create this class:
 
 **Project.java**
 ```
@@ -658,7 +658,7 @@ Refresh the browser, and add two projects to our list.
 
 
 ##Creating tasks list
-It's time to create our task list. When our user creates or select a project in project's list, we should display the folders and tasks associated with that project.
+It's time to create our task list. When our user creates or selects a project in the projects list, we should display the folders and tasks associated with that project.
 
 In order to do that, let's create inside org.uberfire.shared.events a model class called ProjectSelectedEvent, to allow communication between our screens:
 
@@ -706,12 +706,12 @@ import javax.enterprise.event.Event;
         updateView();
     }
 ```
-Let's detail the two important calls that happen inside selectProject(projectName) method:
+There are two important calls that happen inside the selectProject(projectName) method:
 
-- setActiveProject(projectName): mark a specific project as active and update the view;
+- setActiveProject(projectName): marks a specific project as active and updates the view;
 - projectSelectEvent.fire(...): fires a CDI event telling TasksPresenter.java that a project was selected
 
-Now, let's listen this CDI event on **TaskPresenter.java**. Add the following method:
+Now, let's listen to this CDI event on **TaskPresenter.java**. Add the following method:
 ```
 import com.google.gwt.user.client.Window;
 import org.uberfire.shared.events.ProjectSelectedEvent;
@@ -726,7 +726,7 @@ import javax.enterprise.event.Observes;
 
 ##Time to see it work!
 
-Refresh the browser, create two projects and click in one of them.
+Refresh the browser, create two projects and click on one of them.
 
 ![project selected](projectSelected.png)
 
@@ -819,7 +819,7 @@ public class TasksPresenter {
     }
 }
 ```
-We're going to use a popup structure, like NewProject* structure. Let's create it inside package org.uberfire.client.screens.popup:
+We're going to use a popup structure, like the **NewProject** structure. Let's create it inside package org.uberfire.client.screens.popup:
 
 **NewFolderPresenter.java**
 ```
@@ -961,8 +961,8 @@ public class NewFolderView extends Composite
 ```
 
 ####Time to add some tasks
-It's time to add some tasks to our project. At this point, we believe that you already have knowledge in basic Uberfire concepts. So we will comment quickly the changes necessary to implement the tasks support to our project.
-Let's begin creating a model class (package org.uberfire.shared.model):
+It's time to add some tasks to our project. At this point, you're probably very comfortable with basic Uberfire concepts, so we'll just quickly run through the necessary changes to implement the tasks support in our project.
+Let's begin by creating a model class (package org.uberfire.shared.model):
 
 **Folder.java**
 
@@ -999,7 +999,7 @@ public class Folder {
     }
 }
 ```
-Now update the **TasksPresenter.java** in order to support the creation of tasks.
+Now update the **TasksPresenter.java** in order to support task creation.
 ```
 package org.uberfire.client.screens;
 
@@ -1127,7 +1127,7 @@ Let's highlight some important pieces of code
 - newFolder(folderName): create a new folder and add it in persistence structure (folderPerProject).
 
 
-Let's update the **TasksView.java** in order to support the creation of tasks.
+Let's update the **TasksView.java** to support task creation.
 ```
 package org.uberfire.client.screens;
 
@@ -1275,7 +1275,7 @@ This dashboard will count the number of tasks created and done by project and wi
 
 ![dashboard](dashboardFinal.png)
 
-Because we are writing new perspectives, screens and Uberfire needs to generate some code, stop the server and let's back to work.
+Because we'll be writing new perspectives and screens, Uberfire needs to generate some new code; stop the server and let's get back to work.
 
 ###Dashboard Perspective
 Create this class on package org.uberfire.client.perspectives:
@@ -1309,7 +1309,7 @@ public class DashboardPerspective {
     }
 }
 ```
-This class has one presenter (DashboardPresenter) and note that it is a little bit different from TaskPerspective, because it is not a default perspective. You can have only one default perspective that will be automatic loaded on Uberfire startup.
+This class has one presenter (DashboardPresenter) and note that it is a little bit different from TaskPerspective, because it is not a default perspective. You can have only one default perspective that will be automatically loaded on startup.
 
 ###DashboardPresenter
 On org.uberfire.client.screens package:
@@ -1415,7 +1415,7 @@ public class DashboardPresenter {
     }
 }
 ```
-This presenter has a Map and a utility class to keep track of tasks created and done. But how we keep track of the tasks changes? Let's pay a close attention to these methods:
+This presenter has a Map and a utility class to keep track of tasks created and done. But how do we keep track of task changes? Let's pay a close attention to these methods:
 ```
     public void taskCreated( @Observes TaskCreated taskCreated ) {
         ProjectTasksCounter projectTasksCounter = getProjectTasksCounter( taskCreated.getProject() );
@@ -1427,7 +1427,7 @@ This presenter has a Map and a utility class to keep track of tasks created and 
         projectTasksCounter.taskDone();
     }
 ```
-There is two observer methods listening tasks events. Let's create this event classes and fire them?
+There are two observer methods listening for task events. Let's create these event classes.
 
 On org.uberfire.shared.events package:
 ```
@@ -1453,7 +1453,7 @@ public class TaskCreated {
     }
 }
 ```
-And a event class for TaskDone:
+And an event class for TaskDone:
 ```
 package org.uberfire.shared.events;
 
@@ -1477,7 +1477,7 @@ public class TaskDone {
     }
 }
 ```
-Remember that the TaskPresenter creates and marks tasks as done? So let's change these methods to fire a CDI event:
+Remember that the TaskPresenter creates and marks tasks as done, so let's change these methods to fire a CDI event:
 ```
 import org.uberfire.shared.events.TaskCreated;
 import org.uberfire.shared.events.TaskDone;
@@ -1608,7 +1608,7 @@ Now it's time to put this work on our app menu. Open ShowcaseEntryPoint.java and
     }
 ```
 Pay attention to placeManager.goTo( new DefaultPlaceRequest( "DashboardPerspective" ) ) call.
-This method is a Workbench-centric abstraction over the browser's history mechanism. Allows the application to initiate navigation
+This method is a Workbench-centric abstraction over the browser's history mechanism. It allows the application to initiate navigation
 to any displayable thing: a WorkbenchPerspective, a  WorkbenchScreen, a WorkbenchPopup, a WorkbenchEditor, a WorkbenchPart within a screen or editor, or the editor associated with a VFS file.
 
 ##Time to see it work!
@@ -1618,6 +1618,6 @@ Start the server, refresh the browser, create two projects and click in one of t
 ![dashboard final](dashboardFinal.png)
 
 ##Next
-We hope you like this tutorial. If you find any issues or want to contribute on it, feel free to send a pull request for [Uberfire Docs](https://github.com/uberfire/uberfire-docs) and [Uberfire Tutorial](https://github.com/uberfire/uberfire-tutorial) projects.
+We hope you liked this tutorial. If you find any issues or want to contribute to it, feel free to send a pull request for [Uberfire Docs](https://github.com/uberfire/uberfire-docs) and [Uberfire Tutorial](https://github.com/uberfire/uberfire-tutorial) projects.
 
 Now, let's deploy this app in Tomcat and Wildfly.

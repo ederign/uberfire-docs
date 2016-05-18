@@ -1,11 +1,11 @@
 ##Uberfire Javascript API's
-Uberfire has a group of JavaScript APIs that allows the extensibility of the workbench. These APIs are automatic loaded inside the workbench if they are placed in directory "plugins" of your webapp or can be executed via regular Javascript call.
+Uberfire has a group of JavaScript APIs that allows the extensibility of the workbench. These APIs are automatically loaded into the workbench if they are placed in the "plugins" directory of your webapp. They can also be executed via a normal Javascript call.
 
-This section will describe with examples the power of this API.
+This section will demonstrate the power of this API through examples.
 
 ###JS Perspectives
 
-The register Perspective API allows dynamic creation of perspectives.
+The **Perspective** API allows dynamic creation of perspectives.
 ```
 $registerPerspective({
     id: "Home",
@@ -59,7 +59,7 @@ $registerPerspective({
 ```
 ###JS Editor
 
-The Editor API allows dynamic creation of editors and associate them with a file type.
+The **Editor** API allows dynamic creation of editors and their association with one or more file types.
 
 ```
 $registerEditor({
@@ -86,7 +86,9 @@ $registerEditor({
     }
 });
 ```
-Note that in addition to make an editor pluggable, there is some workbench events that can be hooked via JS callback after a Uberfire/workbench native event. On these editors we have two events registered: on_startup and on_open. But there are also more options of Uberfire lifecycle events:
+Note that in addition to making an editor pluggable, certain workbench events can be hooked to a JS callback using the **Editor** API.
+The example above registers handlers for two event types: **on_startup** and **on_open**.
+There are also many more Uberfire lifecycle events available to Editors:
 
 * on_concurrent_update;
 * on_concurrent_delete;
@@ -105,7 +107,7 @@ Note that in addition to make an editor pluggable, there is some workbench event
 * on_shutdown;
 
 
-An editor is displayed via an html template, like this small example:
+An editor is displayed via an html template, like in this example:
 
 ```
 <div id="sampleEditor">
@@ -122,12 +124,12 @@ An editor is displayed via an html template, like this small example:
 
 ```
 ###JS PlaceManager
-Uberfire PlaceManager API allows "go to" a specific workbench component. "Go to" means asks for the workbench display the component associated with some target.
+The Uberfire **PlaceManager** API allows your app to programmatically "go to" a specific workbench component. The "go to" action requests the workbench to display the component associated with some target.
 ```
 $goToPlace("componentIdentifier");
 ```
 ###Register Plugin API
-The Register plugin API creates dynamic plugins (that will be transformed in workbench screens) via a JS API.
+The **Register plugin** API creates dynamic plugins (that will be transformed into workbench screens) via a JS API.
 ```
 $registerPlugin({
     id: "my_angular_js",
@@ -141,7 +143,7 @@ $registerPlugin({
     }
 });
 ```
-Each plugin also has an html template.
+Each plugin also has an html template:
 ```
 File: angular.sample.html
 <div ng-controller="TodoCtrl">
@@ -163,7 +165,7 @@ File: angular.sample.html
     </form>
 </div>
 ```
-A plugin can be hooked to workbench events via a series of JS callbacks:
+A plugin can be hooked to workbench events via these JS callbacks:
 
 * on_concurrent_update;
 * on_concurrent_delete;
@@ -183,7 +185,7 @@ A plugin can be hooked to workbench events via a series of JS callbacks:
 
 ###JS Splash Screens
 
-Splash screens can be also created via a JS API.
+**Splash Screens** can also be created via a JS API.
 
 ```
 $registerSplashScreen({
@@ -199,13 +201,13 @@ $registerSplashScreen({
 ```
 
 ###JS Virtual File System (VFS)
-With this API, you can write and read a file saved in the file system with an asynchronous call.
+The **VFS**  API allows you to read and write files asynchronously.
 ```
 $vfs_readAllString(uri,  function(a) {
-           //callback logic
-        });
+         //callback logic
+    });
 
-    $vfs_write(uri,content,  function(a) {
+$vfs_write(uri,content,  function(a) {
         //callback logic
-     })
+	})
 ```

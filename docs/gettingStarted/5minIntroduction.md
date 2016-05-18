@@ -3,7 +3,8 @@ This session teaches you how to build your first Uberfire App in just 5 minutes.
 
 ## Prerequisites
 This guide assumes you have the following software set up and working on your computer:
-* A Java Development Kit (JDK) version 8 or newer. Microsoft Windows users: be sure to use a 64-bit version of the JDK because Uberfire requires more heap space than can be addressed by a 32-bit VM.
+
+* A Java Development Kit (JDK) version 8 or newer. **Microsoft Windows users:** be sure to use a 64-bit version of the JDK because Uberfire requires more heap space than can be addressed by a 32-bit VM.
 
 * Maven 3.x
 
@@ -34,7 +35,7 @@ Run it and then you should see the message:
 ````
 ## Building your first App
 
-To build your first app, go to directory demo, build the project in maven and wait for the build finish.
+To build your first app, go to directory demo, build the project in maven and wait for the build to finish.
 
 ```
 $ cd demo
@@ -58,7 +59,7 @@ Click on "Launch Default Browser" to open your Uberfire App. Log in with the use
 
 ![hello world](helloWorld.png)
 
-When you see that Hello World, you are able to soon taste Uberfire power.
+After you see that Hello World, you'll soon be able to taste the power of Uberfire.
 
 
 
